@@ -66,7 +66,6 @@ Item {
                                                gps_real.position.coordinate.latitude,
                                                gps_real.position.horizontalAccuracy], function(position) {
                                                    if (position == null) {
-                                                       console.log('using gps_real');
                                                        gps.position = gps_real.position;
                                                        gps.direction = gps_real.direction;
                                                    } else {
@@ -74,7 +73,9 @@ Item {
                                                            QtPositioning.coordinate(
                                                                position.latitude, position.longitude);
                                                        gps.position = position;
-                                                       gps.direction = position.direction;
+                                                       gps.direction = position.direction || gps_real.direction;
+                                                       gps.position.speed = gps.position.speed || gps_real.position.speed;
+                                                       gps.position.speedValid = gps.position.speedValid || gps_real.position.speedValid;
                                                    }
                                                });
 

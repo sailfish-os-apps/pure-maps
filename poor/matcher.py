@@ -28,21 +28,31 @@ class Matcher:
 
     """Map matching."""
 
+    distance_skip_matching = 2.0
+    distance_remeber = 10.0
+
     def __init__(self):
         self.positions = []
+        self.last_position = None
+        self.last_result = None
 
     def match(self, lon, lat, accuracy):
         n = { "lat": lat, "lon": lon }
-        if len(self.positions) > 5:
+        if len(self.positions) > 3:
             del self.positions[0]
 
         if len(self.positions) < 1:
             self.positions.append(n)
             return None
 
+        if self.last_position is not None and poor.util.calculate_distance(lon, lat,
+                                                                           self.last_position["lon"],
+                                                                           self.last_position["lat"]) < self.distance_skip_matching:
+            return self.last_result
+        
         p = self.positions[-1]
         d = poor.util.calculate_distance(lon, lat, p["lon"], p["lat"])
-        if d > 10:
+        if d > 10 and d > accuracy*2:
             self.positions.append(n)
             pos = self.positions
         else:
@@ -65,16 +75,18 @@ class Matcher:
             e = result['edges'][p['edge_index']]
             ed = p['distance_along_edge']
             direction = e['begin_heading']*(1-ed) + e['end_heading']*ed
-            return {
+            r = {
                 'latitude': p['lat'], 'longitude': p['lon'],
                 'horizontalAccuracy': accuracy,
                 'horizontalAccuracyValid': True,
                 'latitudeValid': True,
                 'longitudeValid': True,
-                'speed': 1.0,
-                'speedValid': True,
                 'direction': direction,
             }
+
+            self.last_position = n
+            self.last_result = r
+            return r
 
         return None
 
