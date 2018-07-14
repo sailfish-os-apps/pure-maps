@@ -22,7 +22,7 @@ import "."
 
 IconButton {
     anchors.bottom: parent.bottom
-    anchors.right: parent.right
+    anchors.right: app.menuButton.left
     height: icon.height
     icon.height: icon.sourceSize.height
     icon.rotation: -map.bearing
@@ -36,7 +36,7 @@ IconButton {
         id: bubble
         anchorItem: parent
         showArrow: false
-        state: "top-left"
+        state: "top-center"
         visible: false
     }
 

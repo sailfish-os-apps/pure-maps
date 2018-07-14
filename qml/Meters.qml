@@ -29,6 +29,7 @@ Item {
     height: labels.implicitHeight
     opacity: 0.9
     width: parent.width
+    visible: false
     z: 400
 
     Text {

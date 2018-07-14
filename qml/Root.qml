@@ -55,6 +55,9 @@ Item {
         NorthArrow { id: northArrow }
         Notification { id: notification }
         ScaleBar { id: scaleBar }
+        SpeedBig { id: speedBig }
+        SpeedLimit { id: speedLimit }
+        StreetName { id: streetName }
 
         Component.onCompleted: {
             revolver.updateOrientation();
@@ -68,6 +71,9 @@ Item {
             app.northArrow = northArrow;
             app.notification = notification;
             app.scaleBar = scaleBar;
+            app.speedLimit = speedLimit;
+            app.speedBig = speedBig;
+            app.streetName = streetName;
         }
 
         function updateOrientation() {

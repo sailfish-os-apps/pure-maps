@@ -103,7 +103,7 @@ Item {
 
     function update() {
         if (!py.ready) return;
-        var dist = map.metersPerPixel * map.width / 4;
+        var dist = map.metersPerPixel * map.width / 6;
         dist = scaleBar.roundedDistace(dist);
         scaleBar.scaleWidth = dist / map.metersPerPixel;
         scaleBar.text = py.call_sync("poor.util.format_distance", [dist, 1]);

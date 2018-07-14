@@ -18,6 +18,7 @@
 """Map matching."""
 
 import json
+import math
 import poor
 import urllib.parse
 
@@ -74,7 +75,13 @@ class Matcher:
             p = mpoints[-1]
             e = result['edges'][p['edge_index']]
             ed = p['distance_along_edge']
-            direction = e['begin_heading']*(1-ed) + e['end_heading']*ed
+            a0, a1 = math.radians(e['begin_heading']), math.radians(e['end_heading'])
+            d0_x, d0_y = math.cos(a0), math.sin(a0)
+            d1_x, d1_y = math.cos(a1), math.sin(a1)
+            direction = math.degrees(math.atan2(d0_y*(1-ed)+d1_y*ed, d0_x*(1-ed)+d1_x*ed))
+            sn = e.get('names', None)
+            if sn is not None: street_name = '; '.join(sn)
+            else: street_name = None
             r = {
                 'latitude': p['lat'], 'longitude': p['lon'],
                 'horizontalAccuracy': accuracy,
@@ -82,6 +89,9 @@ class Matcher:
                 'latitudeValid': True,
                 'longitudeValid': True,
                 'direction': direction,
+                'street_name': street_name,
+                'speed_limit': e.get('speed_limit', None),
+                'surface':  e.get('surface', None),
             }
 
             self.last_position = n

@@ -25,9 +25,11 @@ Item {
     id: gps
     
     property var direction: gps_real.direction
-    property var ready: gps_real.ready
     property var position: gps_real.position
-    
+    property bool ready: gps_real.ready
+    property var  speedLimit: undefined
+    property string streetName: ""
+
     PositionSource {
         id: gps_real
         
@@ -68,14 +70,19 @@ Item {
                                                    if (position == null) {
                                                        gps.position = gps_real.position;
                                                        gps.direction = gps_real.direction;
+                                                       gps.streetName = "";
+                                                       gps.speedLimit = undefined;
                                                    } else {
                                                        position.coordinate =
                                                            QtPositioning.coordinate(
                                                                position.latitude, position.longitude);
+                                                       position.speed = position.speed || gps_real.position.speed;
+                                                       position.speedValid = position.speedValid || gps_real.position.speedValid;
                                                        gps.position = position;
-                                                       gps.direction = position.direction || gps_real.direction;
-                                                       gps.position.speed = gps.position.speed || gps_real.position.speed;
-                                                       gps.position.speedValid = gps.position.speedValid || gps_real.position.speedValid;
+                                                       if (position.direction!==undefined) gps.direction = position.direction;
+                                                       else gps.direction = gps_real.direction;
+                                                       gps.streetName = position.street_name || "";
+                                                       gps.speedLimit = position.speed_limit || undefined;
                                                    }
                                                });
 
@@ -104,10 +111,10 @@ Item {
                 gps_real.coordHistory = [];
                 gps_real.direction = undefined;
                 gps_real.directionHistory = [];
-                
                 py.call_sync("poor.app.matcher.clear")
-
                 gps.direction = undefined;
+                gps.streetName = "";
+                gps.speedLimit = undefined;
             }
         }
     }
@@ -122,14 +129,16 @@ Item {
 //    property var direction: undefined
 //    property var position: QtObject {
 //        property var coordinate: QtPositioning.coordinate(60.16807, 24.94155)
-//        property var horizontalAccuracy: 25
-//        property var horizontalAccuracyValid: true
-//        property var latitudeValid: true
-//        property var longitudeValid: true
-//        property var speed: 1
-//        property var speedValid: true
+//        property real horizontalAccuracy: 25
+//        property bool horizontalAccuracyValid: true
+//        property bool latitudeValid: true
+//        property bool longitudeValid: true
+//        property real speed: 123.0
+//        property bool speedValid: true
 //    }
 //    property bool ready: true
+//    property var  speedLimit: undefined
+//    property string streetName: ""
 //    Timer {
 //        interval: 1000
 //        repeat: true
@@ -145,25 +154,28 @@ Item {
 ////            gps.position = gps.position;
 ////            gps.direction = 90;
             
-//            // Map matching
 //            py.call("poor.app.matcher.match", [map.center.longitude,
 //                                               map.center.latitude,
 //                                               gps.position.horizontalAccuracy], function(position) {
 //                                                   if (position == null) {
-//                                                       console.log('using gps_real');
-//                                                       gps.direction = null;
-//                                                       /* gps.position = gps_real.position; */
-//                                                       /* gps.direction = gps_real.direction; */
+////                                                       gps.position = gps_real.position;
+////                                                       gps.direction = gps_real.direction;
+//                                                       gps.streetName = "";
+//                                                       gps.speedLimit = position.speed_limit || undefined;
 //                                                   } else {
 //                                                       position.coordinate =
 //                                                           QtPositioning.coordinate(
 //                                                               position.latitude, position.longitude);
+//                                                       position.speed = 125;
+//                                                       position.speedValid = true;
 //                                                       gps.position = position;
-//                                                       gps.direction = position.direction;
-//                                                       console.log('D: ' + gps.direction)
+//                                                       console.log(JSON.stringify(gps.position))
+//                                                       if (position.direction!==undefined) gps.direction = position.direction;
+//                                                       else gps.direction = undefined;
+//                                                       gps.streetName = position.street_name || "";
+//                                                       gps.speedLimit = position.speed_limit || undefined;
 //                                                   }
 //                                               });
-            
 //        }
 //    }
 //}
