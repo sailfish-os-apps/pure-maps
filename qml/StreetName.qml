@@ -21,9 +21,9 @@ import Sailfish.Silica 1.0
 
 Text {
     id: streetname
-    anchors.bottom: menuButton.top
+    anchors.bottom: navigationInfoBlock.top
     anchors.horizontalCenter: parent.horizontalCenter
-    width: parent.width
+    width: parent.width*3.0/4
     z: 400
     text: gps.streetName
     visible: (text !== undefined && text !== null && text.length>0)

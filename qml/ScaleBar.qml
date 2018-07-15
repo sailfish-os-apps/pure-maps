@@ -24,8 +24,8 @@ import "js/util.js" as Util
 
 Item {
     id: scaleBar
-    anchors.bottom: parent.bottom
-    anchors.bottomMargin: Theme.paddingLarge + Theme.paddingSmall
+    anchors.top: attributionButton.bottom
+    anchors.topMargin: Theme.paddingLarge + Theme.paddingSmall
     anchors.left: parent.left
     anchors.leftMargin: Theme.paddingLarge + Theme.paddingSmall
     height: base.height + text.anchors.bottomMargin + text.height
@@ -103,7 +103,7 @@ Item {
 
     function update() {
         if (!py.ready) return;
-        var dist = map.metersPerPixel * map.width / 6;
+        var dist = map.metersPerPixel * map.width / 4;
         dist = scaleBar.roundedDistace(dist);
         scaleBar.scaleWidth = dist / map.metersPerPixel;
         scaleBar.text = py.call_sync("poor.util.format_distance", [dist, 1]);

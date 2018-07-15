@@ -21,8 +21,8 @@ import Sailfish.Silica 1.0
 import "."
 
 IconButton {
-    anchors.bottom: parent.bottom
-    anchors.right: app.menuButton.left
+    anchors.top: centerButton.bottom
+    anchors.right: parent.right
     height: icon.height
     icon.height: icon.sourceSize.height
     icon.rotation: -map.bearing

@@ -21,9 +21,9 @@ import Sailfish.Silica 1.0
 
 Text {
     anchors.left: parent.left
-    anchors.leftMargin: Theme.paddingSmall
-    anchors.topMargin: Theme.paddingLarge
-    anchors.top: navigationBlock.bottom
+    anchors.leftMargin: Theme.paddingLarge
+    anchors.bottomMargin: Theme.paddingLarge
+    anchors.bottom: streetName.top
     width: parent.width/2
     z: 400
 
