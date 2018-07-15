@@ -35,4 +35,6 @@ Text {
     horizontalAlignment: Text.AlignHCenter
     maximumLineCount: 1
     elide: Text.ElideRight
+    style: Text.Outline
+    styleColor: "white"
 }

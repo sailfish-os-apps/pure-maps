@@ -33,12 +33,14 @@ Text {
     font.pixelSize: Math.round(Theme.pixelRatio * 36)
     fontSizeMode: Text.Fit
     horizontalAlignment: Text.AlignLeft
+    style: Text.Outline
+    styleColor: "white"
 
     function update() {
         // Update speed and positioning accuracy values in user's preferred units.
         if (!py.ready) return;
         if (gps.speedLimit == null) {
-            text = "—";
+            text = "";
             visible = false;
             return;
         }
