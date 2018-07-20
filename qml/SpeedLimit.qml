@@ -39,7 +39,7 @@ Text {
     function update() {
         // Update speed and positioning accuracy values in user's preferred units.
         if (!py.ready) return;
-        if (gps.speedLimit == null) {
+        if (gps.streetSpeedLimit==null || gps.streetSpeedLimit < 0) {
             text = "";
             visible = false;
             return;
@@ -47,11 +47,11 @@ Text {
 
         // speed limit in km/h
         if (app.conf.get("units") === "american") {
-            text = "%1".arg(Math.round(gps.speedLimit * 0.621371))
+            text = "%1".arg(Math.round(gps.streetSpeedLimit * 2.23694))
         } else if (app.conf.get("units") === "british") {
-            text = "%1".arg(Math.round(gps.speedLimit * 0.621371))
+            text = "%1".arg(Math.round(gps.streetSpeedLimit * 2.23694))
         } else {
-            text = "%1".arg(gps.speedLimit)
+            text = "%1".arg(gps.streetSpeedLimit * 3.6)
         }
 
         visible = true
