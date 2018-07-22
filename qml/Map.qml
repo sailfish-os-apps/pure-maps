@@ -43,7 +43,7 @@ MapboxMap {
     //property var    direction: app.navigationStatus.direction || gps.direction
     property var    direction: {
         if (gps.directionValid) return gps.direction;
-        return 0;
+        return undefined;
     }
     property string firstLabelLayer: ""
     property string format: ""
@@ -564,4 +564,30 @@ MapboxMap {
         map.updateSourceLine(map.sources.route, map.route.coordinates);
     }
 
+
+    Rectangle {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.margins: 10
+        color: "white"
+        height: txt.height + 10
+        width: txt.width + 10
+        Text {
+            id: txt
+            anchors.centerIn: parent
+            text: {
+                var s = 'Street: ' + gps.streetName
+                s += "\nSpeed limit: " + Math.round(gps.streetSpeedLimit*3.6) + ' km/h'
+                s += "\nSpeed assumed: " + Math.round(gps.streetSpeedAssumed*3.6) + ' km/h'
+                s += "\nDirection: " + (gps.direction).toFixed(1)
+                s += "\nDirection valid: " + gps.directionValid
+                s += "\n"
+                s += "Timing:\n"
+                s += "Average: " + (gps.timingOverallAvr*1e3).toFixed(1) + " ms\n"
+                s += "Min: " + (gps.timingOverallMin*1e3).toFixed(1) + " ms\n"
+                s += "Max: " + (gps.timingOverallMax*1e3).toFixed(1) + " ms\n"
+                return s;
+            }
+        }
+    }
 }

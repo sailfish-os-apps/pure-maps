@@ -70,7 +70,7 @@ ApplicationWindow {
     property real listItemVerticalMargin: (Theme.itemSizeSmall - 1.125 * Theme.fontSizeMedium) / 2
 
     Root { id: root }
-    PositionSource { id: gps }
+    PositionSource { id: gps; timingStatsEnable: true }
     Python { id: py }
 
     Audio {

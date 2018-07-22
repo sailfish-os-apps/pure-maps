@@ -71,11 +71,20 @@ Item {
     }
 
     function updateDirection() {
-        if (map.direction!==undefined && map.direction!==null && !marker.directionVisible) {
+//        if (map.direction!==undefined && map.direction!==null && !marker.directionVisible) {
+//            map.setLayoutProperty(marker.layers.still, "visibility", "none");
+//            map.setLayoutProperty(marker.layers.moving, "visibility", "visible");
+//            marker.directionVisible = true;
+//        } else if (map.direction==null && marker.directionVisible) {
+//            map.setLayoutProperty(marker.layers.still, "visibility", "visible");
+//            map.setLayoutProperty(marker.layers.moving, "visibility", "none");
+//            marker.directionVisible = false;
+//        }
+        if (map.direction!==undefined && !marker.directionVisible) {
             map.setLayoutProperty(marker.layers.still, "visibility", "none");
             map.setLayoutProperty(marker.layers.moving, "visibility", "visible");
             marker.directionVisible = true;
-        } else if (map.direction==null && marker.directionVisible) {
+        } else if (map.direction===undefined && marker.directionVisible) {
             map.setLayoutProperty(marker.layers.still, "visibility", "visible");
             map.setLayoutProperty(marker.layers.moving, "visibility", "none");
             marker.directionVisible = false;
@@ -83,5 +92,4 @@ Item {
         if (marker.directionVisible)
             map.setLayoutProperty(marker.layers.moving, "icon-rotate", map.direction);
     }
-
 }
